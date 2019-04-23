@@ -18,16 +18,21 @@ div[root]{
 
         > header{
             width: 100%;
+            height: $height_header;
+            min-height: $height_header;
             display: block;
             position: relative;
-            background-color: rgb(31, 95, 214);
+            background-color: rgb(128, 164, 230);
         }
     
         > div{
             width: 80%;
+            height: auto;
+            min-height: $height_content;
+            max-height: auto;
             min-width: $min_width_body;
             max-width: $max_width_body;
-            margin: 20px auto 20px auto;
+            margin: $margin_content auto $margin_content auto;
             padding: 0px;
             border-left: 1px solid;
             border-right: 1px solid;
@@ -42,21 +47,34 @@ div[root]{
                 max-width: $max_width_body;
                 display: block;
                 position: static;
+                margin: 0px;
+                padding: 0px;
     
                 > nav{
-                    width: 100%;
-                    height: $height_nav;
-
+                    width: 30%;
+                    display: block;
+                    margin: 0px;
+                    padding: 0px;
+                    float: left;
+                    height: 100px;
+                    background-color: brown;
                 }
     
                 > section{
-                    width: 100%;
+                    width: 70%;
+                    display: inline-block;
+                    margin: 0px;
+                    padding: 0px;
+                    height: 100px;
+                    background-color: aqua;
                 }
             }
         }
     
         > footer{
             width: 100%;
+            height: $height_footer;
+            min-height: $height_footer;
             margin-top: auto;
             display: block;
             position: relative;

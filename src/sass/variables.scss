@@ -1,4 +1,9 @@
 //structure.component
 $min_width_body:800px;
 $max_width_body:1200px;
+$height_header:100px;
+$height_footer:65px;
+$margin_content:20px;
+$height_content: calc(100% - #{$height_header} - #{$height_footer} - calc(#{$margin_content} * 2));
+
 $height_nav:200px;
