@@ -1,4 +1,6 @@
 import { Component, OnInit, ElementRef, AfterViewChecked, Renderer2 } from '@angular/core';
+import { RouteService } from '../service/route.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'structure-root',
@@ -9,14 +11,20 @@ export class StructureComponent implements OnInit, AfterViewChecked {
   
   private _contentGlobalElement:any;
   private _contentElement:any;
+  private _newURL:string;
 
-  constructor(private _domStructure:ElementRef, private _renderer:Renderer2){
+  constructor(private _domStructure:ElementRef,
+              private _renderer:Renderer2,
+              private _routeService:RouteService,
+              private _route:Router){
     
   }
 
   public ngOnInit():void{
     this._contentGlobalElement = this._domStructure.nativeElement.children[0].children[0].children[1];
     this._contentElement = this._domStructure.nativeElement.children[0].children[0].children[1].children[0];
+    this._routeService.routeStartChange.subscribe((url:string) => this.startCloseCurrentPage(url));
+    this._routeService.pageClose.subscribe(() => this.changeRoute());
   }
 
   public ngAfterViewChecked():void{
@@ -27,6 +35,16 @@ export class StructureComponent implements OnInit, AfterViewChecked {
       this._renderer.setStyle(this._contentGlobalElement, 'height', contentHeight + 'px');
       this._renderer.setStyle(this._contentGlobalElement, 'minHeight', contentHeight + 'px');
     }
+  }
+
+  private startCloseCurrentPage(url:string):void{
+    this._newURL = url;
+    console.log('-------------');
+    this._route.navigateByUrl(this._newURL);
+  }
+
+  private changeRoute():void{
+    this._route.navigateByUrl(this._newURL);
   }
 
 }

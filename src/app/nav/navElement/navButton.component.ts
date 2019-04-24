@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { NavEntities } from 'src/app/entities/nav.entities';
+import { RouteService } from 'src/app/service/route.service';
 
 @Component({
     selector: 'navButton-root',
@@ -17,7 +18,7 @@ export class NavButtonComponent{
         return this._url;
     }
 
-    constructor(){
+    constructor(private _routeService:RouteService){
         
     }
 
@@ -29,7 +30,7 @@ export class NavButtonComponent{
     }
 
     private onClickNavButton(e:MouseEvent):void{
-        console.log('onClickNavButton : ' + this._url);
+        this._routeService.routeStartChange.emit(this._url);
     }
 
 }
