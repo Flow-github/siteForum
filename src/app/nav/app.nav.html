@@ -1,7 +1,7 @@
 <div root>
     <div>
-        <div *ngFor="let navEntity of listNavElements">
-            <span>{{ navEntity.getName() }}</span>
+        <div *ngFor="let navEntity of _listNavElements">
+            <navButton-root [_navEntity]="navEntity"></navButton-root>
         </div>
     </div>
 </div>

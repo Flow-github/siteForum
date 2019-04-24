@@ -10,7 +10,7 @@ export class StructureComponent implements OnInit, AfterViewChecked {
   private _contentGlobalElement:any;
   private _contentElement:any;
 
-  constructor(private _domStructure:ElementRef){
+  constructor(private _domStructure:ElementRef, private _renderer:Renderer2){
     
   }
 
@@ -24,8 +24,8 @@ export class StructureComponent implements OnInit, AfterViewChecked {
     var globalContentHeight:number = this._contentGlobalElement.clientHeight;
     var contentHeight:number = this._contentElement.clientHeight;
     if(globalContentHeight < contentHeight){
-      this._contentGlobalElement.style.height = contentHeight + 'px';
-      this._contentGlobalElement.style.minHeight = contentHeight + 'px';
+      this._renderer.setStyle(this._contentGlobalElement, 'height', contentHeight + 'px');
+      this._renderer.setStyle(this._contentGlobalElement, 'minHeight', contentHeight + 'px');
     }
   }
 

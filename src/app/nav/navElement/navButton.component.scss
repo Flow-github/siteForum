@@ -1,0 +1,9 @@
+div[root]{
+    > div{
+        margin: 2px auto 20px 20px;
+        > span:hover{
+            color:rgb(21, 98, 241);
+            cursor: pointer;
+        }
+    }
+}

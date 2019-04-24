@@ -5,7 +5,7 @@ export class NavEntities{
 
     }
 
-    public getName():string{
+    public get name():string{
         return this._name;
     }
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavService } from '../service/nav.service';
 import { NavEntities } from '../entities/nav.entities';
+import { NavButtonComponent } from './navElement/navButton.component';
 
 @Component({
     selector: 'nav-root',
@@ -9,14 +10,14 @@ import { NavEntities } from '../entities/nav.entities';
 })
 export class NavComponent{
 
-    private listNavElements:Array<NavEntities>
+    private _listNavElements:Array<NavEntities>;
 
     constructor(private _navService:NavService){
-
+        
     }
 
     public ngOnInit():void{
-        this.listNavElements = this._navService.getNavList();
+        this._listNavElements = this._navService.getNavList();
     }
 
 }
