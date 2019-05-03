@@ -85,7 +85,7 @@ export class AbstractPage implements OnInit, OnDestroy{
         let tween:TWEEN.Tween = new TWEEN.Tween(pageInitialObject);
         tween.to({posX:newXPosition}, 400);
         tween.onUpdate((objectUpdateTween:any) => this.updatedPageByTween(objectUpdateTween));
-        tween.onComplete(() => this.completedPageByTween());
+        tween.onComplete((objectUpdateTween:any) => this.completedPageByTween(objectUpdateTween));
         tween.onStop(function() { console.log('stop'); });
         tween.easing(TWEEN.Easing.Exponential.In);
         tween.start();
@@ -95,10 +95,11 @@ export class AbstractPage implements OnInit, OnDestroy{
         this.targetHtml.style.left = objectUpdateTween.posX + "px";
     }
 
-    protected completedPageByTween():void{
+    protected completedPageByTween(objectUpdateTween:any):void{
         clearInterval(this.time);
-
-        this.routeService.pageClose.emit();
+        if(objectUpdateTween.posX > 0){
+            this.routeService.pageClose.emit();
+        }
     }
 
     private renderTween(){
