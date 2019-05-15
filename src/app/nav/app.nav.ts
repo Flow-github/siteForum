@@ -12,6 +12,10 @@ export class NavComponent{
 
     private _listNavElements:Array<NavEntities>;
 
+    public get listNavElements():Array<NavEntities>{
+        return this._listNavElements;
+    }
+
     constructor(private _navService:NavService){
         
     }
