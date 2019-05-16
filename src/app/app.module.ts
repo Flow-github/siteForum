@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
+import { RequestService } from 'src/app/service/request.service';
 import { AppRoutingModule } from './app-routing.module';
 import { RouteService } from './service/route.service'
 import { NavService } from './service/nav.service';
@@ -22,11 +24,13 @@ import { ContactComponent } from './pages/contact/app.contact';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     NavService,
     RouteService,
+    RequestService
   ],
   bootstrap: [
     StructureComponent
