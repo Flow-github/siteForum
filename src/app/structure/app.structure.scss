@@ -22,7 +22,7 @@ div[root]{
             min-height: $height_header;
             display: block;
             position: relative;
-            background-color: rgb(128, 164, 230);
+            background-color: $header_blue_color;
         }
     
         > div{
@@ -75,7 +75,7 @@ div[root]{
             margin-top: auto;
             display: block;
             position: relative;
-            background-color: rgb(21, 98, 241);
+            background-color: $footer_blue_color;
         }
     }
 }

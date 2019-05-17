@@ -1,8 +1,7 @@
 <div root>
     <div>
         <div *ngFor="let twitteEntity of listTwittesElements">
-                {{ twitteEntity.text }}
-            <!--twitteButton-root [_twitteEntity]="twitteEntity"></twitteButton-root-->
+            <twitteButton-root [_twitteEntity]="twitteEntity"></twitteButton-root>
         </div>
     </div>
 </div>

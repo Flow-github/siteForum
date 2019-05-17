@@ -1,9 +1,14 @@
+@import '../../../sass/variables.scss';
+
 div[root]{
     > div{
         margin: 2px auto 20px 20px;
+        > span{
+            font-size: 22px;
+        }
         > span:hover{
             font-weight: bold;
-            color:rgb(21, 98, 241);
+            color: $footer_blue_color;
             cursor: pointer;
         }
     }

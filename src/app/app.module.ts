@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr);
 
 import { RequestService } from 'src/app/service/request.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +14,7 @@ import { HomeComponent } from './pages/home/app.home';
 import { NavComponent } from './nav/app.nav';
 import { NavButtonComponent } from './nav/navElement/navButton.component';
 import { TwittesListComponent } from './pages/twittes/app.twittes';
+import { TwitteComponent } from './pages/twittes/twitteElement/twitte.component';
 import { ContactComponent } from './pages/contact/app.contact';
 
 @NgModule({
@@ -20,6 +24,7 @@ import { ContactComponent } from './pages/contact/app.contact';
     NavButtonComponent,
     HomeComponent,
     TwittesListComponent,
+    TwitteComponent,
     ContactComponent,
   ],
   imports: [
@@ -28,6 +33,7 @@ import { ContactComponent } from './pages/contact/app.contact';
     HttpClientModule
   ],
   providers: [
+    {provide: LOCALE_ID, useValue: 'fr' },
     NavService,
     RouteService,
     RequestService
