@@ -1,8 +1,24 @@
+@import '../../../sass/variables.scss';
+
 div[root]{
     position: static;
     width: 100%;
     > div{
         position: relative;
         width: 100%;
+    }
+    > div:last-child{
+        padding: 0px 0px 0px 4px;
+        margin: 90px 0px 60px 0px;
+        > span#seeMore{
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: -1px;
+            color: $header_blue_color;
+        }
+        > span#seeMore:hover{
+            color: $footer_blue_color;
+            cursor: pointer;
+        }
     }
 }
