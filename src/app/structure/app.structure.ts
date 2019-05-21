@@ -29,7 +29,7 @@ export class StructureComponent implements OnInit, AfterViewChecked {
   }
 
   public ngAfterViewChecked():void{
-    var stylesGlobalContent:CSSStyleDeclaration = window.getComputedStyle(this._domStructure.nativeElement.children[0].children[0].children[1], null);
+    //var stylesGlobalContent:CSSStyleDeclaration = window.getComputedStyle(this._domStructure.nativeElement.children[0].children[0].children[1], null);
     var globalContentHeight:number = this._contentGlobalElement.clientHeight;
     var contentHeight:number = this._contentElement.clientHeight;
     if(globalContentHeight < contentHeight){
@@ -50,8 +50,6 @@ export class StructureComponent implements OnInit, AfterViewChecked {
 
   private startCloseCurrentPage(url:string):void{
     this._newURL = url;
-    //console.log('-------------');
-    //this._route.navigateByUrl(this._newURL);
   }
 
   private changeRoute():void{

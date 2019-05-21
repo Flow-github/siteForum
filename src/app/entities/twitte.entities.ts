@@ -6,8 +6,10 @@ export class TwitteEntities{
     private _text:string;
     private _createdDate:string;
     private _favoriteCount:number;
+    private _favorited:boolean;
     private _retweetCount:number;
     private _retweeted:boolean;
+    private _hashtags:Array<any>;
     private _userTwitte:UserTwitteEntities;
 
     constructor(twitteParams:any){
@@ -15,8 +17,10 @@ export class TwitteEntities{
         this._text = twitteParams.text;
         this._createdDate = twitteParams.created_at;
         this._favoriteCount = twitteParams.favorite_count;
+        this._favorited = twitteParams.favorited;
         this._retweetCount = twitteParams.retweet_count;
         this._retweeted = twitteParams.retweeted;
+        this._hashtags = twitteParams.entities.hashtags;
         this._userTwitte = new UserTwitteEntities(twitteParams.user);
     }
 
@@ -36,12 +40,24 @@ export class TwitteEntities{
         return this._favoriteCount;
     }
 
+    public get favorited():boolean{
+        return this._favorited;
+    }
+
     public get retweetCount():number{
         return this._retweetCount;
     }
 
     public get retweeted():boolean{
         return this._retweeted;
+    }
+
+    public get isFollow():boolean{
+        return this._favorited || this._retweeted;
+    }
+
+    public get hashtags():Array<any>{
+        return this._hashtags;
     }
 
     public get userTwitte():UserTwitteEntities{

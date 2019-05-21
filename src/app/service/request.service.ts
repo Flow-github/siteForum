@@ -15,4 +15,14 @@ export class RequestService{
         return this._httpClient.get(route);
     }
 
+    public getTweet(idTwitte:string):Observable<Object>{
+        let route:string = '/api/twitte/' + idTwitte;
+        return this._httpClient.get(route);
+    }
+
+    public getMessagesFromTweet(idTwitte:string):Observable<Object>{
+        let route:string = '/api/twitte/messages' + idTwitte;
+        return this._httpClient.get(route);
+    }
+
 }

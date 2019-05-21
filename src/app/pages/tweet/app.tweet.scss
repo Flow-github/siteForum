@@ -1,0 +1,68 @@
+@import '../../../sass/variables.scss';
+
+div[root]{
+    position: static;
+    width: 100%;
+    > div{
+        position: relative;
+        width: 100%;
+        margin: 0px 0px 40px 0px;
+        > div:first-child{
+            margin: 4px 0px 0px 0px;
+            width: auto;
+            height: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            color: $footer_blue_color;
+            letter-spacing: -0.5px;
+        }
+        > div{
+            cursor: pointer;
+            > span.title{
+                font-size: 34px;
+                font-weight: bold;
+                letter-spacing: -1.5px;
+                line-height: 31px;
+            }
+
+            > span.author{
+                color: $header_blue_color;
+                font-size: 20px;
+                line-height: 80px;
+                > img{
+                    vertical-align: middle;
+                    border: 1px solid #F4F4F4;
+                    border-radius: 24px;
+                }
+            }
+
+            > span.date{
+                color: $grey_text_color;
+                font-size: 14px;
+                line-height: 80px;
+            }
+
+            > span.follow{
+                font-size: 14px;
+                line-height: 80px;
+                > .followTitle{
+                    color: $grey_text_color;
+                }
+            }
+
+            > span.tag{
+                font-size: 16px;
+                color: $header_blue_color;
+                > .tagTitle{
+                    color: $grey_text_color;
+                }
+            }
+
+            > hr{
+                width: 100%;
+                /*float: left;*/
+                color: $grey_text_color;
+            }
+        }
+    }
+}

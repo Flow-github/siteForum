@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   firstPageView: true,
-  idLastTwitte: '',
+  idTweetSelected: '',
   listTwittesLoaded: null,
 };
 

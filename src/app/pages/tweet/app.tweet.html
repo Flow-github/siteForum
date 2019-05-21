@@ -1,0 +1,21 @@
+<div root>
+    <div>
+        <div #backButton>Retour à la liste</div>
+        <div #tweet>
+            <hr/>
+            <span class='author'><img [src]='profilImageSrc' /> {{ author }}</span>
+            <br/>
+            <span class='title'>
+                {{ text }}
+            </span>
+            <br/>
+            <span class='date'>le {{ date | date:'EEEE, dd LLLL yyyy' }}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span #spanFollow class='follow'><span class='followTitle'>favoris:</span> {{ countFavoris }}<span class='followTitle'>, retweets:</span> {{ countRetweets }}</span>
+            <br/>
+            <span #spanTag class='tag'><span class='tagTitle'>Tags:</span> {{ listTags }}</span>
+            <br/>
+            <hr/>
+        </div>
+    </div>
+</div>

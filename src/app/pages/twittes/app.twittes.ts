@@ -39,14 +39,20 @@ export class TwittesListComponent extends AbstractPage{
         if(environment.listTwittesLoaded != null){
             this._listTwittesElements = environment.listTwittesLoaded;
         }else{
+            this.targetHtml.style.visibility = 'hidden';
             this.callTwittes();
         }
     }
 
     public ngOnDestroy():void{
         super.ngOnDestroy();
+
         this._seeMoreElement.nativeElement.removeEventListener('click', this._callFunctionClick);
         this._callFunctionClick = null;
+
+        if(this._subLoadTwittes){
+            this._subLoadTwittes.unsubscribe();
+        }
     }
 
     private callTwittes(idTwitte:string = ''){
@@ -57,6 +63,7 @@ export class TwittesListComponent extends AbstractPage{
         this._listTwittesElements = this._listTwittesElements.concat(this.transformListResult(res));
         environment.listTwittesLoaded = this._listTwittesElements;
         this._subLoadTwittes.unsubscribe();
+        this.targetHtml.style.visibility = 'visible';
     }
 
     private transformListResult(res:Response):Array<TwitteEntities>{
@@ -79,6 +86,8 @@ export class TwittesListComponent extends AbstractPage{
     private loadTwittesErrorHandler(err:HttpErrorResponse){
         console.log('loadTwittesErrorHandler');
         console.log(err);
+        this._subLoadTwittes.unsubscribe();
+        this.targetHtml.style.visibility = 'visible';
     }
 
     private addTwittes(e:MouseEvent):void{

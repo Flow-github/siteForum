@@ -1,5 +1,8 @@
 import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy } from "@angular/core";
 import { TwitteEntities } from 'src/app/entities/twitte.entities';
+import { RouteService } from 'src/app/service/route.service';
+import { environment } from 'src/environments/environment';
+import { NavService } from 'src/app/service/nav.service';
 
 @Component({
     selector: 'twitteButton-root',
@@ -30,7 +33,7 @@ export class TwitteComponent implements OnInit, OnDestroy{
         return this._twitteEntity.userTwitte.name;
     }
 
-    constructor(){
+    constructor(private _routeService:RouteService){
 
     }
 
@@ -46,7 +49,8 @@ export class TwitteComponent implements OnInit, OnDestroy{
     }
 
     private onClick(e:MouseEvent):void{
-        console.log('onClick');
+        environment.idTweetSelected = this.id;
+        this._routeService.routeStartChange.emit(NavService.TWEET_ROUTE);
     }
 
 }
