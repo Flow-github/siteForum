@@ -21,6 +21,7 @@ export class TweetComponent extends AbstractPage{
     @ViewChild('spanTag') _spanTag:ElementRef;
     private _tweetEntity:TwitteEntities;
     private _subLoadTweet:Subscription;
+    private _subLoadMessages:Subscription;
     private _callClickTweet:Function;
     private _callClickBack:Function;
 
@@ -72,6 +73,7 @@ export class TweetComponent extends AbstractPage{
 
         if(environment.idTweetSelected != ''){
             this._subLoadTweet = this._requestService.getTweet(environment.idTweetSelected).subscribe((res:Response) => {this.loadTweetHandler(res)}, (err:HttpErrorResponse) => {this.loadTweetErrorHandler(err)});
+            this._subLoadMessages = this._requestService.getMessagesFromTweet(environment.idTweetSelected).subscribe((res:Response) => {this.loadMessagesHandler(res)}, (err:HttpErrorResponse) => {this.loadMessagesErrorHandler(err)});
             window.scrollTo(0, 0);
         }else{
             this.targetHtml.style.visibility = 'hidden';
@@ -90,6 +92,10 @@ export class TweetComponent extends AbstractPage{
 
         if(this._subLoadTweet){
             this._subLoadTweet.unsubscribe();
+        }
+
+        if(this._subLoadMessages){
+            this._subLoadMessages.unsubscribe();
         }
 
         this._backButton.nativeElement.removeEventListener('click', this._callClickBack);
@@ -112,6 +118,18 @@ export class TweetComponent extends AbstractPage{
         console.log(err);
         this.targetHtml.style.visibility = 'hidden';
         this._subLoadTweet.unsubscribe();
+    }
+
+    private loadMessagesHandler(res:Response):void{
+        console.log(res);
+        this._subLoadMessages.unsubscribe();
+    }
+
+    private loadMessagesErrorHandler(err:HttpErrorResponse):void{
+        console.log('loadMessagesErrorHandler');
+        console.log(err);
+        this.targetHtml.style.visibility = 'hidden';
+        this._subLoadMessages.unsubscribe();
     }
 
     private onClickBackHandler(e:MouseEvent):void{

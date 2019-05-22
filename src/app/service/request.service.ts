@@ -21,8 +21,20 @@ export class RequestService{
     }
 
     public getMessagesFromTweet(idTwitte:string):Observable<Object>{
-        let route:string = '/api/twitte/messages' + idTwitte;
+        let route:string = '/api/twitte/messages/' + idTwitte;
         return this._httpClient.get(route);
+    }
+
+    public logIn(pLogin:string, pPassword:string):Observable<Object>{
+        let route:string = '/api/login';
+        let params:any = {login:pLogin, password:pPassword};
+        return this._httpClient.post(route, params);
+    }
+
+    public addMessage(pText:string, pIdTweet:string, pIdUser:number):Observable<Object>{
+        let route:string = '/api/twitte/message';
+        let params:any = {text:pText, id_tweet:pIdTweet, id_user:pIdUser};
+        return this._httpClient.post(route, params);
     }
 
 }
