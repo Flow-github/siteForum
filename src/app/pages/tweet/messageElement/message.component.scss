@@ -1,0 +1,33 @@
+@import '../../../../sass/variables.scss';
+
+div[root]{
+    > div{
+
+        > span.author{
+            color: $header_blue_color;
+            font-size: 16px;
+            line-height: 40px;
+        }
+
+        > span.title{
+            font-size: 20px;
+            /*font-weight: bold;*/
+            letter-spacing: -0.5px;
+            line-height: 31px;
+        }
+
+        > span.date{
+            color: $grey_text_color;
+            font-size: 10px;
+            line-height: 40px;
+        }
+
+        > hr{
+            width: 40%;
+            /*float: left;*/
+            color: $grey_text_color;
+            background-color: $grey_text_color;
+            border: 1px dashed $grey_text_color;
+        }
+    }
+}

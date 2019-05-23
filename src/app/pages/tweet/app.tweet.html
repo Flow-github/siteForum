@@ -17,5 +17,10 @@
             <br/>
             <hr/>
         </div>
+        <div>
+            <div *ngFor="let messageEntity of listMessages">
+                <appMessage-root [_messageEntity]="messageEntity"></appMessage-root>
+            </div>
+        </div>
     </div>
 </div>

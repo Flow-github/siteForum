@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TwitteEntities } from 'src/app/entities/twitte.entities';
 import { NavService } from 'src/app/service/nav.service';
+import { MessageEntities } from 'src/app/entities/message.entities';
 
 @Component({
     selector: '',
@@ -19,7 +20,9 @@ export class TweetComponent extends AbstractPage{
     @ViewChild('tweet') _tweet:ElementRef;
     @ViewChild('spanFollow') _spanFollow:ElementRef;
     @ViewChild('spanTag') _spanTag:ElementRef;
+
     private _tweetEntity:TwitteEntities;
+    private _listMessages:Array<MessageEntities>;
     private _subLoadTweet:Subscription;
     private _subLoadMessages:Subscription;
     private _callClickTweet:Function;
@@ -62,6 +65,10 @@ export class TweetComponent extends AbstractPage{
             }
         }
         return tags;
+    }
+
+    public get listMessages():Array<MessageEntities>{
+        return this._listMessages;
     }
 
     constructor(private _routeService:RouteService, _elRef:ElementRef, private _requestService:RequestService){
@@ -121,7 +128,13 @@ export class TweetComponent extends AbstractPage{
     }
 
     private loadMessagesHandler(res:Response):void{
-        console.log(res);
+        let aResult:any = res;
+        let listMessages:Array<MessageEntities> = new Array<MessageEntities>();
+        for(let i:number = 0; i < aResult.length; i++){
+            listMessages.push(new MessageEntities(aResult[i]));
+        }
+        this._listMessages = listMessages;
+
         this._subLoadMessages.unsubscribe();
     }
 

@@ -16,6 +16,7 @@ import { NavButtonComponent } from './nav/navElement/navButton.component';
 import { TwittesListComponent } from './pages/twittes/app.twittes';
 import { TwitteComponent } from './pages/twittes/twitteElement/twitte.component';
 import { TweetComponent } from './pages/tweet/app.tweet';
+import { MessageComponent } from './pages/tweet/messageElement/message.component';
 import { ContactComponent } from './pages/contact/app.contact';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { ContactComponent } from './pages/contact/app.contact';
     TwittesListComponent,
     TwitteComponent,
     TweetComponent,
+    MessageComponent,
     ContactComponent,
   ],
   imports: [
