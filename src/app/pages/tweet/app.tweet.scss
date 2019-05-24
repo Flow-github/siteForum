@@ -17,6 +17,7 @@ div[root]{
             letter-spacing: -0.5px;
         }
         > div{
+            padding: 0px 2px 0px 2px;
             cursor: pointer;
             > span.title{
                 font-size: 34px;
@@ -56,6 +57,22 @@ div[root]{
                 > .tagTitle{
                     color: $grey_text_color;
                 }
+            }
+
+            > span.addMessage{
+                background-color: $footer_blue_color;
+                border: 1px solid $footer_blue_color;
+                border-radius: 16px;
+                color: #FFFFFF;
+                padding: 4px;
+                float: right;
+                letter-spacing: -0.5px;
+            }
+
+            > span.addMessage:hover{
+                background-color: #FFFFFF;
+                border: 1px solid #FFFFFF;
+                color: $footer_blue_color;
             }
 
             > hr{

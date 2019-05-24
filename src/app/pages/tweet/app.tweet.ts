@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AbstractPage } from '../abstractPage.component';
 import { RouteService } from 'src/app/service/route.service';
 import { RequestService } from 'src/app/service/request.service';
@@ -20,6 +21,10 @@ export class TweetComponent extends AbstractPage{
     @ViewChild('tweet') _tweet:ElementRef;
     @ViewChild('spanFollow') _spanFollow:ElementRef;
     @ViewChild('spanTag') _spanTag:ElementRef;
+    @ViewChild('messageButton') _messageButton:ElementRef;
+    @ViewChild('formMessage') _formMessageElement:ElementRef;
+
+    public messageForm:FormGroup;
 
     private _tweetEntity:TwitteEntities;
     private _listMessages:Array<MessageEntities>;
@@ -27,6 +32,9 @@ export class TweetComponent extends AbstractPage{
     private _subLoadMessages:Subscription;
     private _callClickTweet:Function;
     private _callClickBack:Function;
+    private _callClickAddMessage:Function;
+    private _callOverAddMessage:Function;
+    private _callOutAddMessage:Function;
 
     public get id():string{
         return this._tweetEntity ? this._tweetEntity.id : '';
@@ -92,6 +100,13 @@ export class TweetComponent extends AbstractPage{
 
         this._callClickTweet = (e:MouseEvent) => {this.onClickTweetHandler(e)};
         this._tweet.nativeElement.addEventListener('click', this._callClickTweet);
+
+        this._callClickAddMessage = (e:MouseEvent) => {this.onClickAddMessageHandler(e)};
+        this._callOverAddMessage = (e:MouseEvent) => {this.onOverAddMessageHandler(e)};
+        this._callOutAddMessage = (e:MouseEvent) => {this.onOutAddMessageHandler(e)};
+        this._messageButton.nativeElement.addEventListener('click', this._callClickAddMessage);
+        this._messageButton.nativeElement.addEventListener('mouseover', this._callOverAddMessage);
+        this._messageButton.nativeElement.addEventListener('mouseout', this._callOutAddMessage);
     }
 
     public ngOnDestroy():void{
@@ -107,9 +122,15 @@ export class TweetComponent extends AbstractPage{
 
         this._backButton.nativeElement.removeEventListener('click', this._callClickBack);
         this._tweet.nativeElement.removeEventListener('click', this._callClickTweet);
+        this._messageButton.nativeElement.removeEventListener('click', this._callClickAddMessage);
+        this._messageButton.nativeElement.removeEventListener('mouseover', this._callOverAddMessage);
+        this._messageButton.nativeElement.removeEventListener('mouseout', this._callOutAddMessage);
 
         this._callClickBack = null;
         this._callClickTweet = null;
+        this._callClickAddMessage = null;
+        this._callOverAddMessage = null;
+        this._callOutAddMessage = null;
     }
 
     private loadTweetHandler(res:Response):void{
@@ -151,6 +172,18 @@ export class TweetComponent extends AbstractPage{
 
     private onClickTweetHandler(e:MouseEvent):void{
         window.open('https://twitter.com/user/status/' + this._tweetEntity.id,'_blank');
+    }
+
+    private onClickAddMessageHandler(e:MouseEvent):void{
+        console.log('onClickAddMessageHandler');
+    }
+
+    private onOverAddMessageHandler(e:MouseEvent):void{
+        this._tweet.nativeElement.removeEventListener('click', this._callClickTweet);
+    }
+
+    private onOutAddMessageHandler(e:MouseEvent):void{
+        this._tweet.nativeElement.addEventListener('click', this._callClickTweet);
     }
 
 }
