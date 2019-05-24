@@ -1,8 +1,9 @@
 @import '../../../../sass/variables.scss';
 
 div[root]{
+    cursor: default;
+    margin: 20px 0px 20px 0px;
     > div{
-
         > span.author{
             color: $header_blue_color;
             font-size: 16px;
@@ -11,7 +12,6 @@ div[root]{
 
         > span.title{
             font-size: 20px;
-            /*font-weight: bold;*/
             letter-spacing: -0.5px;
             line-height: 31px;
         }
@@ -23,11 +23,10 @@ div[root]{
         }
 
         > hr{
+            display: block;
             width: 40%;
-            /*float: left;*/
-            color: $grey_text_color;
-            background-color: $grey_text_color;
-            border: 1px dashed $grey_text_color;
+            float: left;
+            border: 0.5px dotted $grey_text_color;
         }
     }
 }
