@@ -8,6 +8,7 @@ div[root]{
         width: 100%;
         margin: 0px 0px 40px 0px;
         > div:first-child{
+            cursor: pointer;
             margin: 4px 0px 0px 0px;
             width: auto;
             height: 50px;
@@ -16,7 +17,7 @@ div[root]{
             color: $footer_blue_color;
             letter-spacing: -0.5px;
         }
-        > div{
+        > div#tweet{
             padding: 0px 2px 0px 2px;
             cursor: pointer;
             > span.title{
@@ -77,9 +78,62 @@ div[root]{
 
             > hr{
                 width: 100%;
-                /*float: left;*/
                 color: $grey_text_color;
             }
+        }
+        > div.form{
+            height: 0px;
+            overflow: hidden;
+            > form > div{
+                width: 100%;
+                > span{
+                    > div{
+                        display: inline-block;
+                        margin: 0px;
+                        padding: 0px;
+                        > textarea{
+                            width: 97%;
+                            border-color: $header_blue_color;
+                            border-style:solid;
+                            resize: none;
+                            font-family: "Helvetica Neue LT Std", Helvetica, Arial, sans-serif;
+                        }
+                    }
+                    > div:first-child{
+                        width: 20%;
+                        float: left;
+                        color: $grey_text_color;
+                    }
+                    > div:last-child{
+                        width: 80%;
+                    }
+                }
+                > div{
+                    margin: 20px 0px 0px 0px;
+                    > button{
+                        display: block;
+                        width: 80px;
+                        height: 30px;
+                        margin: 0 auto;
+                    }
+                }
+            }
+        }
+        > div.formClose{
+            height: 0px;
+            -webkit-transition: height 0.5s ease-in-out;
+            -moz-transition: height 0.5s ease-in-out;
+            -ms-transition: height 0.5s ease-in-out;
+            -o-transition: height 0.5s ease-in-out;
+            transition: height 0.5s ease-in-out;
+        }
+        > div.formOpen{
+            height: 150px;
+            -webkit-transition: height 0.5s ease-in-out;
+            -moz-transition: height 0.5s ease-in-out;
+            -ms-transition: height 0.5s ease-in-out;
+            -o-transition: height 0.5s ease-in-out;
+            transition: height 0.5s ease-in-out;
         }
     }
 }

@@ -18,7 +18,10 @@ import { TwittesListComponent } from './pages/twittes/app.twittes';
 import { TwitteComponent } from './pages/twittes/twitteElement/twitte.component';
 import { TweetComponent } from './pages/tweet/app.tweet';
 import { MessageComponent } from './pages/tweet/messageElement/message.component';
+import { LoginComponent } from './pages/login/app.login';
+import { AccountComponent } from './pages/account/app.account';
 import { ContactComponent } from './pages/contact/app.contact';
+import { NativeElementInjectorDirective } from './utils/nativeElement.injector.directive';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { ContactComponent } from './pages/contact/app.contact';
     TwitteComponent,
     TweetComponent,
     MessageComponent,
+    LoginComponent,
+    AccountComponent,
     ContactComponent,
+    NativeElementInjectorDirective,
   ],
   imports: [
     BrowserModule,

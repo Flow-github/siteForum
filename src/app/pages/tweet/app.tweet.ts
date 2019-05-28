@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TwitteEntities } from 'src/app/entities/twitte.entities';
 import { NavService } from 'src/app/service/nav.service';
 import { MessageEntities } from 'src/app/entities/message.entities';
+import { SessionEntities } from 'src/app/entities/session.entities';
 
 @Component({
     selector: '',
@@ -30,11 +31,14 @@ export class TweetComponent extends AbstractPage{
     private _listMessages:Array<MessageEntities>;
     private _subLoadTweet:Subscription;
     private _subLoadMessages:Subscription;
+    private _subSendMessage:Subscription;
     private _callClickTweet:Function;
     private _callClickBack:Function;
     private _callClickAddMessage:Function;
     private _callOverAddMessage:Function;
     private _callOutAddMessage:Function;
+    private _classToAdd:string;
+    private _classToRemove:string;
 
     public get id():string{
         return this._tweetEntity ? this._tweetEntity.id : '';
@@ -79,12 +83,15 @@ export class TweetComponent extends AbstractPage{
         return this._listMessages;
     }
 
-    constructor(private _routeService:RouteService, _elRef:ElementRef, private _requestService:RequestService){
+    constructor(private _routeService:RouteService, _elRef:ElementRef, private _requestService:RequestService, private _formBuilder: FormBuilder){
         super(_routeService, _elRef);
     }
 
     public ngOnInit():void{
         super.ngOnInit();
+
+        this._classToAdd = 'formOpen';
+        this._classToRemove = 'formClose';
 
         if(environment.idTweetSelected != ''){
             this._subLoadTweet = this._requestService.getTweet(environment.idTweetSelected).subscribe((res:Response) => {this.loadTweetHandler(res)}, (err:HttpErrorResponse) => {this.loadTweetErrorHandler(err)});
@@ -107,6 +114,10 @@ export class TweetComponent extends AbstractPage{
         this._messageButton.nativeElement.addEventListener('click', this._callClickAddMessage);
         this._messageButton.nativeElement.addEventListener('mouseover', this._callOverAddMessage);
         this._messageButton.nativeElement.addEventListener('mouseout', this._callOutAddMessage);
+
+        this.messageForm = this._formBuilder.group({
+            message: ['', Validators.required]
+        });
     }
 
     public ngOnDestroy():void{
@@ -120,6 +131,10 @@ export class TweetComponent extends AbstractPage{
             this._subLoadMessages.unsubscribe();
         }
 
+        if(this._subSendMessage){
+            this._subSendMessage.unsubscribe();
+        }
+
         this._backButton.nativeElement.removeEventListener('click', this._callClickBack);
         this._tweet.nativeElement.removeEventListener('click', this._callClickTweet);
         this._messageButton.nativeElement.removeEventListener('click', this._callClickAddMessage);
@@ -131,6 +146,14 @@ export class TweetComponent extends AbstractPage{
         this._callClickAddMessage = null;
         this._callOverAddMessage = null;
         this._callOutAddMessage = null;
+    }
+
+    public onSubmitForm(){
+        if(this.messageForm.status == 'INVALID'){
+            this.formIsInvalid();
+        }else if(this.messageForm.status == 'VALID'){
+            this.formIsValid();
+        }
     }
 
     private loadTweetHandler(res:Response):void{
@@ -175,7 +198,16 @@ export class TweetComponent extends AbstractPage{
     }
 
     private onClickAddMessageHandler(e:MouseEvent):void{
-        console.log('onClickAddMessageHandler');
+        if(sessionStorage.getItem(SessionEntities.KEY_IS_CONNECTED)){
+            this._formMessageElement.nativeElement.classList.remove(this._classToRemove);
+            this._formMessageElement.nativeElement.classList.add(this._classToAdd);
+
+            let switchClass:string = this._classToRemove;
+            this._classToRemove = this._classToAdd;
+            this._classToAdd = switchClass;
+        }else{
+            this._routeService.routeStartChange.emit(NavService.LOG_IN);
+        }
     }
 
     private onOverAddMessageHandler(e:MouseEvent):void{
@@ -184,6 +216,36 @@ export class TweetComponent extends AbstractPage{
 
     private onOutAddMessageHandler(e:MouseEvent):void{
         this._tweet.nativeElement.addEventListener('click', this._callClickTweet);
+    }
+
+    private postMessageHandler(res:Response):void{
+        console.log('postMessageHandler');
+        console.log(res);
+
+        this._subSendMessage.unsubscribe();
+    }
+
+    private postMessageErrorHandler(err:HttpErrorResponse):void{
+        console.log('postMessageErrorHandler');
+        console.log(err);
+
+        this._subSendMessage.unsubscribe();
+        this._subLoadMessages = this._requestService.getMessagesFromTweet(environment.idTweetSelected).subscribe((res:Response) => {this.loadMessagesHandler(res)}, (err:HttpErrorResponse) => {this.loadMessagesErrorHandler(err)});
+    }
+
+    private formIsInvalid():void{
+        //console.log('formIsInvalid');
+    }
+
+    private formIsValid():void{
+        this._subSendMessage = this._requestService.addMessage(this.messageForm.value.message, environment.idTweetSelected, 1).subscribe((res:Response) => {this.postMessageHandler(res)}, (err:HttpErrorResponse) => {this.postMessageErrorHandler(err)});
+        
+        var formControl:FormControl;
+        var control:string;
+        for(control in this.messageForm.controls){
+            formControl = this.messageForm.controls[control] as FormControl;
+            formControl.reset();
+        }
     }
 
 }

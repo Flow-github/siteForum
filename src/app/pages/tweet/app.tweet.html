@@ -1,7 +1,7 @@
 <div root>
     <div>
         <div #backButton>Retour à la liste</div>
-        <div #tweet>
+        <div #tweet id='tweet'>
             <hr/>
             <span class='author'><img [src]='profilImageSrc' /> {{ author }}</span>
             <br/>
@@ -19,18 +19,20 @@
             <br/>
             <hr/>
         </div>
-        <div #formMessage>
+        <div #formMessage class='form formClose'>
             <form [formGroup]="messageForm" (ngSubmit)="onSubmitForm()">
                 <div>
                     <span>
                         <div>MESSAGE :</div>
                         <div>
-                            <textarea my-formControl name="textMessage" rows="10" formControlName="message"></textarea>
+                            <textarea name="textMessage" rows="4" formControlName="message"></textarea>
                         </div>
                     </span>
                 </div>
                 <div>
-                    <button type="submit">Envoyer</button>
+                    <div>
+                        <button type="submit">Envoyer</button>
+                    </div>
                 </div>
             </form>
             <br/>

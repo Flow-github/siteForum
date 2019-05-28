@@ -1,0 +1,27 @@
+<div root>
+    <div>
+        <div>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmitForm()">
+                <div id='titleLogin'>
+                    Connexion :
+                </div>
+                <div id='formLogin'>
+                    <div>
+                        <span>email : </span>
+                        <input my-formControl type='text' value='' name='textEmail' formControlName="email" />
+                    </div>
+                    <div>
+                        <span>mot de passe : </span>
+                        <input my-formControl type='text' value='' name='textPassword' formControlName="password" />
+                    </div>
+                </div>
+                <div id='buttonLogin'>
+                    <button type="submit">Connexion</button>
+                </div>
+            </form>
+            <div #displayError id='errorLogin'>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</div>
