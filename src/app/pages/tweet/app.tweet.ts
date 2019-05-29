@@ -198,7 +198,7 @@ export class TweetComponent extends AbstractPage{
     }
 
     private onClickAddMessageHandler(e:MouseEvent):void{
-        if(sessionStorage.getItem(SessionEntities.KEY_IS_CONNECTED)){
+        if(parseInt(sessionStorage.getItem(SessionEntities.KEY_IS_CONNECTED), 10)){
             this._formMessageElement.nativeElement.classList.remove(this._classToRemove);
             this._formMessageElement.nativeElement.classList.add(this._classToAdd);
 
@@ -222,6 +222,7 @@ export class TweetComponent extends AbstractPage{
         console.log('postMessageHandler');
         console.log(res);
 
+        this._subLoadMessages = this._requestService.getMessagesFromTweet(environment.idTweetSelected).subscribe((res:Response) => {this.loadMessagesHandler(res)}, (err:HttpErrorResponse) => {this.loadMessagesErrorHandler(err)});
         this._subSendMessage.unsubscribe();
     }
 
@@ -230,7 +231,6 @@ export class TweetComponent extends AbstractPage{
         console.log(err);
 
         this._subSendMessage.unsubscribe();
-        this._subLoadMessages = this._requestService.getMessagesFromTweet(environment.idTweetSelected).subscribe((res:Response) => {this.loadMessagesHandler(res)}, (err:HttpErrorResponse) => {this.loadMessagesErrorHandler(err)});
     }
 
     private formIsInvalid():void{
@@ -238,7 +238,10 @@ export class TweetComponent extends AbstractPage{
     }
 
     private formIsValid():void{
-        this._subSendMessage = this._requestService.addMessage(this.messageForm.value.message, environment.idTweetSelected, 1).subscribe((res:Response) => {this.postMessageHandler(res)}, (err:HttpErrorResponse) => {this.postMessageErrorHandler(err)});
+        let message:string = this.messageForm.value.message;
+        let idTweet:string = environment.idTweetSelected;
+        let idUser:number = parseInt(sessionStorage.getItem(SessionEntities.KEY_ID_USER), 10);
+        this._subSendMessage = this._requestService.addMessage(message, idTweet, idUser).subscribe((res:Response) => {this.postMessageHandler(res)}, (err:HttpErrorResponse) => {this.postMessageErrorHandler(err)});
         
         var formControl:FormControl;
         var control:string;

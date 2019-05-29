@@ -4,6 +4,9 @@ import { RouteService } from 'src/app/service/route.service';
 import { RequestService } from 'src/app/service/request.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SessionEntities } from 'src/app/entities/session.entities';
+import { environment } from 'src/environments/environment';
+import { NavService } from 'src/app/service/nav.service';
 
 @Component({
     selector: '',
@@ -59,7 +62,6 @@ export class LoginComponent extends AbstractPage{
         var control:string;
         for(control in this.loginForm.controls){
             formControl = this.loginForm.controls[control] as FormControl;
-            //formControl.reset();
             (formControl as any).nativeElement.classList.remove('redBorder');
             (formControl as any).nativeElement.classList.remove('greenBorder');
         }
@@ -68,7 +70,16 @@ export class LoginComponent extends AbstractPage{
     }
 
     private logToHandler(res:Response):void{
-        console.log(res);
+        let userObject:any = res;
+        sessionStorage.setItem(SessionEntities.KEY_IS_CONNECTED, '1');
+        sessionStorage.setItem(SessionEntities.KEY_ID_USER, userObject.id.toString());
+        sessionStorage.setItem(SessionEntities.KEY_PSEUDO_USER, userObject.pseudo);
+
+        if(environment.isBackOnSite){
+            window.history.back();
+        }else{
+            this._routeService.routeStartChange.emit(NavService.LIST_TWEETS_ROUTE);
+        }
     }
 
     private logToErrorHandler(err:HttpErrorResponse):void{

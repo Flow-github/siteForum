@@ -7,6 +7,7 @@ export const environment = {
   firstPageView: true,
   idTweetSelected: '',
   listTwittesLoaded: null,
+  isBackOnSite: false,
 };
 
 /*

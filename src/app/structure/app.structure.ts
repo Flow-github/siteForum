@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, AfterViewChecked, Renderer2 } from '@angular/core';
 import { RouteService } from '../service/route.service';
 import { Router, NavigationEnd, Event } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'structure-root',
@@ -53,6 +54,7 @@ export class StructureComponent implements OnInit, AfterViewChecked {
   }
 
   private changeRoute():void{
+    environment.isBackOnSite = true;
     this._route.navigateByUrl(this._newURL);
   }
 
