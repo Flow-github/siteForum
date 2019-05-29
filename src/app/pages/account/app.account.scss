@@ -1,0 +1,10 @@
+@import '../../../sass/variables.scss';
+
+div[root]{
+    position: static;
+    width: 100%;
+    > div{
+        position: relative;
+        width: 100%;
+    }
+}

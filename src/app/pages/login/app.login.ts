@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SessionEntities } from 'src/app/entities/session.entities';
 import { environment } from 'src/environments/environment';
 import { NavService } from 'src/app/service/nav.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: '',
@@ -19,6 +20,8 @@ export class LoginComponent extends AbstractPage{
 
     public loginForm:FormGroup;
 
+    private _subLogTo:Subscription;
+
     constructor(private _routeService:RouteService, _elRef:ElementRef, private _requestService:RequestService, private _formBuilder: FormBuilder){
         super(_routeService, _elRef);
     }
@@ -30,6 +33,14 @@ export class LoginComponent extends AbstractPage{
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required ],
         });
+    }
+
+    public ngOnDestroy():void{
+        super.ngOnDestroy();
+
+        if(this._subLogTo){
+            this._subLogTo.unsubscribe();
+        }
     }
 
     public onSubmitForm():void{
@@ -56,7 +67,7 @@ export class LoginComponent extends AbstractPage{
     }
 
     private formIsValid():void{
-        this._requestService.logIn(this.loginForm.value.email, this.loginForm.value.password).subscribe((res:Response) => {this.logToHandler(res)}, (err:HttpErrorResponse) => {this.logToErrorHandler(err)});
+        this._subLogTo = this._requestService.logIn(this.loginForm.value.email, this.loginForm.value.password).subscribe((res:Response) => {this.logToHandler(res)}, (err:HttpErrorResponse) => {this.logToErrorHandler(err)});
 
         var formControl:FormControl;
         var control:string;
@@ -70,6 +81,8 @@ export class LoginComponent extends AbstractPage{
     }
 
     private logToHandler(res:Response):void{
+        this._subLogTo.unsubscribe();
+
         let userObject:any = res;
         sessionStorage.setItem(SessionEntities.KEY_IS_CONNECTED, '1');
         sessionStorage.setItem(SessionEntities.KEY_ID_USER, userObject.id.toString());
@@ -89,6 +102,8 @@ export class LoginComponent extends AbstractPage{
         }else{
             this._displayError.nativeElement.innerHTML = '<span>Un problème inconnu est survenu veuillez réessayer plus tard</span>';
         }
+
+        this._subLogTo.unsubscribe();
     }
 
 }

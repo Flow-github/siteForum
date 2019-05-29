@@ -1,0 +1,39 @@
+<div root>
+    <div>
+        <div>
+            <form [formGroup]="createAccountForm" (ngSubmit)="onSubmitForm()">
+                <div id='titleLogin'>
+                    Créer un compte :
+                </div>
+                <div id='formLogin'>
+                    <div>
+                        <span>email : </span>
+                        <input my-formControl type='text' value='' name='textEmail' formControlName="email" />
+                    </div>
+                    <div>
+                        <span>mot de passe : </span>
+                        <input my-formControl type='text' value='' name='textPassword' formControlName="password" />
+                    </div>
+                    <div>
+                        <span>confirmation du mot de passe : </span>
+                        <input my-formControl type='text' value='' name='textConfirmPassword' formControlName="passwordConfirm" />
+                    </div>
+                    <div>
+                        <span>pseudo : </span>
+                        <input my-formControl type='text' value='' name='textPseudo' formControlName="pseudo" />
+                    </div>
+                    <div>
+                        <span>j'accepte les conditions d'utilisations : </span>
+                        <input type='checkbox' name='caseCGU' formControlName="cgu" />
+                    </div>
+                </div>
+                <div id='buttonLogin'>
+                    <button type="submit">Connexion</button>
+                </div>
+            </form>
+            <div #displayError id='errorLogin'>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</div>
