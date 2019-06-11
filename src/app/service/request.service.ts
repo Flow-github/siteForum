@@ -37,4 +37,10 @@ export class RequestService{
         return this._httpClient.post(route, params);
     }
 
+    public createAccount(pParams:any):Observable<Object>{
+        let route:string = '/api/addUser';
+        let params:any = {login:pParams.email, password:pParams.password, passwordConfirm:pParams.passwordConfirm, pseudo:pParams.pseudo, cgu:pParams.cgu};
+        return this._httpClient.post(route, params);
+    }
+
 }

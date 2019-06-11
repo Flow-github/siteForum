@@ -3,6 +3,8 @@ import { AbstractPage } from '../abstractPage.component';
 import { RouteService } from 'src/app/service/route.service';
 import { RequestService } from 'src/app/service/request.service';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: '',
@@ -11,11 +13,20 @@ import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from
 })
 export class AccountComponent extends AbstractPage{
     
+    private static readonly NAME_INPUT_CONVERT:any = {email:'email', 
+                                                    password:'mot de passe',
+                                                    passwordConfirm: 'confirmation mot de passe',
+                                                    pseudo: 'pseudo'};
+    private static readonly ERROR_MESSAGE_NOTSAMEPASSWORD:string = 'Vous n\'avez pas entré deux fois le même mot de passe !';
+    private static readonly ERROR_MESSAGE_CGU:string = 'Vous devez accepter les conditions d\'utilisations';
+
     @ViewChild('displayError') _displayError:ElementRef;
 
     public createAccountForm:FormGroup;
 
+    private _cguAccepted:boolean;
     private _errorsMessage:string;
+    private _subCreate:Subscription;
 
     constructor(private _routeService:RouteService, _elRef:ElementRef, private _requestService:RequestService, private _formBuilder: FormBuilder){
         super(_routeService, _elRef);
@@ -30,16 +41,22 @@ export class AccountComponent extends AbstractPage{
             passwordConfirm: ['', [Validators.required] ],
             pseudo: ['', [Validators.required, Validators.maxLength(20)] ],
             cgu: ['', [Validators.required] ],
-        }, {validator: (formTarget:AbstractControl) => {this.checkCheckbox(formTarget)}});
+        },
+        {validator: (formTarget:AbstractControl) => {this.checkCheckbox(formTarget)}}
+        );
     }
 
     public ngOnDestroy():void{
         super.ngOnDestroy();
+
+        if(this._subCreate){
+            this._subCreate.unsubscribe();
+        }
     }
 
     public onSubmitForm():void{
         this._errorsMessage = '';
-        if(this.createAccountForm.status == 'INVALID'){
+        if(this.createAccountForm.status == 'INVALID' || !this._cguAccepted){
             this.formIsInvalid();
         }else if(this.createAccountForm.status == 'VALID'){
             this.formIsValid();
@@ -48,89 +65,82 @@ export class AccountComponent extends AbstractPage{
     }
 
     private checkCheckbox(formTarget:AbstractControl):void{
-        console.log('checkCheckbox');
-        /*if(formTarget.get('cgu')){
-            console.log(formTarget.get('cgu').value);
-            if(!formTarget.get('cgu').value){
-                formTarget.get('cgu').reset();
-            }
-        }*/
+        if(formTarget.get('cgu')){
+            this._cguAccepted = formTarget.get('cgu').value;
+        }
     }
 
     private formIsInvalid():void{
         let formControl:FormControl;
         let control:string;
-        let inputValue:any;
         for(control in this.createAccountForm.controls){
             formControl = this.createAccountForm.controls[control] as FormControl;
-            inputValue = formControl.value;
             if((formControl as any).nativeElement != null){
                 if(formControl.valid){
                     if(control != 'cgu'){
-                        (formControl as any).nativeElement.classList.add('greenBorder');
-                        (formControl as any).nativeElement.classList.remove('redBorder');
+                        this.addGreenBorderTo(control);
                     }
                 }else{
-                    (formControl as any).nativeElement.classList.add('redBorder');
-                    (formControl as any).nativeElement.classList.remove('greenBorder');
+                    this.addRedBorderTo(control);
                     if(formControl.errors.maxlength){
-                        console.log(formControl.errors);
-                        let nameInput:string = control;
+                        let nameInput:string = AccountComponent.NAME_INPUT_CONVERT[control];
                         let maxLength:string = formControl.errors.maxlength.requiredLength.toString();
                         let textError:string = 'Le champ ' + nameInput + ' ne peut comprendre au maximum que ' + maxLength + ' charactéres';
                         this.addErrorMessage(textError);
-                    }else if(control == 'cgu'){
-                        this.addErrorMessage('Vous devez accepter les conditions d\'utilisations');
                     }
                 }
             }
+        }
 
-            //formControl.reset();
-            /*if(control == 'cgu'){
-                console.log(formControl);
-                formControl.reset();
-                (formControl as any).nativeElement.checked = inputValue;
-            }else{
-                formControl.reset();
-                (formControl as any).nativeElement.value = inputValue;
-            }*/
+        this.testPasswordValue();
+
+        if(!this._cguAccepted){
+            this.addErrorMessage(AccountComponent.ERROR_MESSAGE_CGU);
         }
     }
 
     private formIsValid():void{
         let formControl:FormControl;
         let control:string;
-        let testError:string = '';
-        let valueMDP:string;
-        let valueConfMDP:string
         for(control in this.createAccountForm.controls){
-            formControl = this.createAccountForm.controls[control] as FormControl;
+            formControl = this.createAccountForm.get(control) as FormControl;
             if((formControl as any).nativeElement != null){
-                (formControl as any).nativeElement.classList.remove('redBorder');
-                (formControl as any).nativeElement.classList.remove('greenBorder');
-            }
-
-            switch(control){
-                case 'password':
-                    valueMDP = formControl.value;
-                break;
-                case 'passwordConfirm':
-                    valueConfMDP = formControl.value;
-                break;
-                default :
-                break;
+                this.addGreenBorderTo(control);
             }
         }
 
-        if(valueMDP == valueConfMDP){
+        if(this.testPasswordValue()){
+            this._subCreate = this._requestService.createAccount(this.createAccountForm.value).subscribe((res:Response) => {this.createHandler(res)}, (err:HttpErrorResponse) => {this.createErrorHandler(err)});
+        }
+    }
 
-        }else{
-            testError = 'Vous n\'avez pas entré deux fois le même mot de passe !';
-            (this.createAccountForm.controls['password'] as any).nativeElement.classList.add('redBorder');
-            (this.createAccountForm.controls['passwordConfirm'] as any).nativeElement.classList.add('redBorder');
+    private testPasswordValue():boolean{
+        let same:boolean = this.createAccountForm.get('password').value == this.createAccountForm.get('passwordConfirm').value;
+        if(!same){
+            this.addErrorMessage(AccountComponent.ERROR_MESSAGE_NOTSAMEPASSWORD);
+            this.addRedBorderTo('password');
+            this.addRedBorderTo('passwordConfirm');
         }
 
-        this.addErrorMessage(testError);
+        return same;
+    }
+
+    private addGreenBorderTo(target:string):void{
+        let formControl:FormControl = this.createAccountForm.get(target) as FormControl;
+        (formControl as any).nativeElement.classList.add('greenBorder');
+        (formControl as any).nativeElement.classList.remove('redBorder');
+    }
+
+    private addRedBorderTo(target:string):void{
+        let formControl:FormControl = this.createAccountForm.get(target) as FormControl;
+        (formControl as any).nativeElement.classList.add('redBorder');
+        (formControl as any).nativeElement.classList.remove('greenBorder');
+    }
+
+    private removeBorderTo(target:string):void{
+        let formControl:FormControl = this.createAccountForm.get(target) as FormControl;
+        (formControl as any).nativeElement.classList.remove('redBorder');
+        (formControl as any).nativeElement.classList.remove('greenBorder');
     }
 
     private addErrorMessage(textError:string):void{
@@ -139,6 +149,16 @@ export class AccountComponent extends AbstractPage{
 
     private displayErrorMessage():void{
         this._displayError.nativeElement.innerHTML = '<span>' + this._errorsMessage + '</span>';
+    }
+
+    private createHandler(res:Response):void{
+        console.log('createHandler');
+        console.log(res);
+    }
+
+    private createErrorHandler(err:HttpErrorResponse):void{
+        console.log('createErrorHandler');
+        console.log(err);
     }
 
 }
