@@ -154,11 +154,35 @@ export class AccountComponent extends AbstractPage{
     private createHandler(res:Response):void{
         console.log('createHandler');
         console.log(res);
+        this._subCreate.unsubscribe();
     }
 
     private createErrorHandler(err:HttpErrorResponse):void{
         console.log('createErrorHandler');
         console.log(err);
+        if(err.status == 400 && err.error.code == 400){
+            switch(err.error.error){
+                case 1 :
+                break;
+                case 2 :
+                break;
+                case 3 :
+                break;
+                case 4 :
+                break;
+                case 5 :
+                break;
+                case 6 :
+                break;
+                case 7 :
+                break;
+                default :
+                    this.addErrorMessage(err.statusText);
+                break;
+            }
+        }
+
+        this._subCreate.unsubscribe();
     }
 
 }
