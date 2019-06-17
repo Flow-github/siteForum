@@ -5,6 +5,9 @@ import { RequestService } from 'src/app/service/request.service';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SessionEntities } from 'src/app/entities/session.entities';
+import { environment } from 'src/environments/environment';
+import { NavService } from 'src/app/service/nav.service';
 
 @Component({
     selector: '',
@@ -19,6 +22,9 @@ export class AccountComponent extends AbstractPage{
                                                     pseudo: 'pseudo'};
     private static readonly ERROR_MESSAGE_NOTSAMEPASSWORD:string = 'Vous n\'avez pas entré deux fois le même mot de passe !';
     private static readonly ERROR_MESSAGE_CGU:string = 'Vous devez accepter les conditions d\'utilisations';
+    private static readonly ERROR_MESSAGE_LOGIN_ALREADY_USE:string = 'Cet email est dèja utilisé par un autre compte';
+    private static readonly ERROR_MESSAGE_PSEUDO_ALREADY_USE:string = 'Ce pseudo est dèja utilisé par un autre compte';
+    private static readonly ERROR_MESSAGE_LOGIN_AND_PSEUDO_ALREADY_USE:string = 'Cet email et ce pseudo sont dèja utilisé par un autre compte';
 
     @ViewChild('displayError') _displayError:ElementRef;
 
@@ -155,34 +161,59 @@ export class AccountComponent extends AbstractPage{
         console.log('createHandler');
         console.log(res);
         this._subCreate.unsubscribe();
+
+        let returnObject:any = res;
+        sessionStorage.setItem(SessionEntities.KEY_IS_CONNECTED, '1');
+        sessionStorage.setItem(SessionEntities.KEY_ID_USER, returnObject.insertId);
+        sessionStorage.setItem(SessionEntities.KEY_PSEUDO_USER, this.createAccountForm.value.pseudo);
+
+        if(environment.isBackOnSite){
+            window.history.back();
+        }else{
+            this._routeService.routeStartChange.emit(NavService.LIST_TWEETS_ROUTE);
+        }
     }
 
     private createErrorHandler(err:HttpErrorResponse):void{
-        console.log('createErrorHandler');
-        console.log(err);
-        if(err.status == 400 && err.error.code == 400){
+        this._subCreate.unsubscribe();
+        if((err.status == 400 && err.error.code == 400) || err.status == 412){
             switch(err.error.error){
                 case 1 :
+                    this.addRedBorderTo('pseudo');
                 break;
                 case 2 :
+                    this.addRedBorderTo('email');
                 break;
                 case 3 :
+                    this.addRedBorderTo('password');
+                    this.addRedBorderTo('passwordConfirm');
+                    this.addErrorMessage(AccountComponent.ERROR_MESSAGE_NOTSAMEPASSWORD);
                 break;
                 case 4 :
+                    this.addErrorMessage(AccountComponent.ERROR_MESSAGE_CGU);
                 break;
                 case 5 :
+                    this.addRedBorderTo('email');
+                    this.addErrorMessage(AccountComponent.ERROR_MESSAGE_LOGIN_ALREADY_USE);
                 break;
                 case 6 :
+                    this.addRedBorderTo('pseudo');
+                    this.addErrorMessage(AccountComponent.ERROR_MESSAGE_PSEUDO_ALREADY_USE);
                 break;
                 case 7 :
+                    this.addRedBorderTo('email');
+                    this.addRedBorderTo('pseudo');
+                    this.addErrorMessage(AccountComponent.ERROR_MESSAGE_LOGIN_AND_PSEUDO_ALREADY_USE);
                 break;
                 default :
                     this.addErrorMessage(err.statusText);
                 break;
             }
+        }else{
+            this.addErrorMessage('Un problème inconnu est survenu veuillez réessayer plus tard');
         }
 
-        this._subCreate.unsubscribe();
+        this.displayErrorMessage();
     }
 
 }
