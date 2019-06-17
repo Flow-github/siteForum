@@ -1,0 +1,15 @@
+users :
+id =>
+login => varchar 255
+password =>  varchar 255
+pseudo => varchar 255
+cgu =>
+isValide =>
+
+messages :
+id =>
+text => Blog
+date => timestamp
+id_tweet => varchar
+id_user => Int
+isValid => 
