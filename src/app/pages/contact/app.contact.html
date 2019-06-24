@@ -1,5 +1,33 @@
 <div root>
     <div>
-        Page de contact !!!
+        <div>
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmitForm()">
+                <div id="titleContact">ME CONTACTER</div>
+                <div id="formContact">
+                    <div>
+                        <span>nom : </span>
+                        <input my-formControl name="contactName" type="text" value="" formControlName="name" />
+                    </div>
+                    <div>
+                        <span>prenom : </span>
+                        <input my-formControl name="contactFirstName" type="text" value="" formControlName="firstName" />
+                    </div>
+                    <div>
+                        <span>email : </span>
+                        <input my-formControl name="contactMail" type="text" value="" formControlName="mail" />
+                    </div>
+                    <div>
+                        <span>message :</span>
+                        <textarea my-formControl name="contactMessage" rows="10" formControlName="message"></textarea>
+                    </div>
+                </div>
+                <div id='buttonContact'>
+                    <button type="submit">Envoyer</button>
+                </div>
+            </form>
+            <div #displayError id='errorContact'>
+                <span></span>
+            </div>
+        </div>
     </div>
 </div>

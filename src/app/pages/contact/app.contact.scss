@@ -1,8 +1,83 @@
+@import '../../../sass/variables.scss';
+
 div[root]{
     position: static;
     width: 100%;
     > div{
         position: relative;
         width: 100%;
+
+        > div{
+            > form{
+                > div#titleContact{
+                    display: block;
+                    width: 100%;
+                    font-size: 32px;
+                    letter-spacing: -1.5px;
+                    color: $footer_blue_color;
+                    margin: 4px 0px 40px 0px;
+                }
+
+                > div#formContact{
+                    display: block;
+                    width: 100%;
+                    margin: 0px 0px 180px 0px;
+                    > div{
+                        margin: 0px;
+                        padding: 0px;
+                        display: block;
+                        width: 70%;
+                        margin: 0px 0px 16px 0px;
+
+                        > span{
+                            font-size: 16px;
+                            color: $text_color;
+                            letter-spacing: -0.5px;
+                        }
+
+                        > input{
+                            width: 70%;
+                            border-style:solid;
+                            float: right;
+                        }
+                        > input.greenBorder{
+                            border-left-color: $text_good_color;
+                            border-left-width: 2px;
+                        }
+                        > input.redBorder{
+                            border-left-color: $text_error_color;
+                            border-left-width: 2px;
+                        }
+                    }
+
+                    > div:last-child{
+                        > textarea{
+                            width: 70%;
+                            border-style:solid;
+                            float: right;
+                            resize: none;
+                        }
+                    }
+                }
+
+                > div#buttonContact{
+                    display: block;
+                    width: 100%;
+                    margin: 0px 0px 20px 0px;
+                    > button{
+                        display: block;
+                        margin: 0px 50% 0px 30%;
+                        width: 20%;
+                        height: 30px;
+                    }
+                }
+            }
+            > div#errorContact{
+                display: block;
+                width: 100%;
+                font-size: 14px;
+                color: $text_error_color;
+            }
+        }
     }
 }
