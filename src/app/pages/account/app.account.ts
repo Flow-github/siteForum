@@ -25,6 +25,7 @@ export class AccountComponent extends AbstractPage{
     private static readonly ERROR_MESSAGE_LOGIN_ALREADY_USE:string = 'Cet email est dèja utilisé par un autre compte';
     private static readonly ERROR_MESSAGE_PSEUDO_ALREADY_USE:string = 'Ce pseudo est dèja utilisé par un autre compte';
     private static readonly ERROR_MESSAGE_LOGIN_AND_PSEUDO_ALREADY_USE:string = 'Cet email et ce pseudo sont dèja utilisé par un autre compte';
+    private static readonly ERROR_MESSAGE_INCONNU:string = 'Un problème inconnu est survenu veuillez réessayer plus tard';
 
     @ViewChild('displayError') _displayError:ElementRef;
 
@@ -158,8 +159,6 @@ export class AccountComponent extends AbstractPage{
     }
 
     private createHandler(res:Response):void{
-        console.log('createHandler');
-        console.log(res);
         this._subCreate.unsubscribe();
 
         let returnObject:any = res;
@@ -210,7 +209,7 @@ export class AccountComponent extends AbstractPage{
                 break;
             }
         }else{
-            this.addErrorMessage('Un problème inconnu est survenu veuillez réessayer plus tard');
+            this.addErrorMessage(AccountComponent.ERROR_MESSAGE_INCONNU);
         }
 
         this.displayErrorMessage();
