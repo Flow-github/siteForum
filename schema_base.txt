@@ -3,13 +3,13 @@ id =>
 login => varchar 255
 password =>  varchar 255
 pseudo => varchar 255
-cgu =>
-isValide =>
+cgu => tinyint 4
+isValide => tinyint 4
 
 messages :
 id =>
-text => Blog
+text => varchar 255
 date => timestamp
-id_tweet => varchar
-id_user => Int
-isValid => 
+id_tweet => varchar 255
+id_user => Int 11
+isValid => tinyint 4
