@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AbstractPage } from '../abstractPage.component';
 import { RouteService } from 'src/app/service/route.service';
 import { RequestService } from 'src/app/service/request.service';
@@ -11,6 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
     styleUrls: ['./app.contact.scss']
 })
 export class ContactComponent extends AbstractPage{
+
+    @ViewChild('displayReturn') _displayReturn:ElementRef;
 
     public contactForm:FormGroup;
     
@@ -38,40 +40,61 @@ export class ContactComponent extends AbstractPage{
     }
   
     private formIsInvalid(){
-        /*var formControl:FormControl;
+        var formControl:FormControl;
         var control:string;
         for(control in this.contactForm.controls){
             formControl = this.contactForm.controls[control] as FormControl;
             if(formControl.valid){
-                (formControl as any).nativeElement.style.borderLeftColor = "green";
-                (formControl as any).nativeElement.style.borderLeftWidth = '2px';
+                this.addGreenBorderTo(control);
             }else{
-                (formControl as any).nativeElement.style.borderLeftColor = "red";
-                (formControl as any).nativeElement.style.borderLeftWidth = '2px';
+                this.addRedBorderTo(control);
             }
-        }*/
+        }
     }
   
     private formIsValid(){
-        //this.sendMessage.sendMessage(this.contactForm.value).subscribe((res:ArrayBuffer) => this.resultSaveMessage(res), (err:HttpErrorResponse) => this.resultSaveMessageError(err));;
-  
-        /*var formControl:FormControl;
+        this._requestService.sendMail(this.contactForm.value).subscribe((res:Response) => this.sendMessageHandler(res), (err:HttpErrorResponse) => this.sendMessageErrorHandler(err));;
+        //console.log(this.contactForm.value);
+        var formControl:FormControl;
         var control:string;
         for(control in this.contactForm.controls){
             formControl = this.contactForm.controls[control] as FormControl;
-            (formControl as any).nativeElement.style.borderLeftColor = "";
-            (formControl as any).nativeElement.style.borderLeftWidth = '0px';
+            this.removeBorderTo(control);
             formControl.reset();
             (formControl as any).nativeElement.value = '';
-        }*/
+        }
+    }
+
+    private addGreenBorderTo(target:string):void{
+        let formControl:FormControl = this.contactForm.get(target) as FormControl;
+        (formControl as any).nativeElement.classList.add('greenBorder');
+        (formControl as any).nativeElement.classList.remove('redBorder');
+    }
+
+    private addRedBorderTo(target:string):void{
+        let formControl:FormControl = this.contactForm.get(target) as FormControl;
+        (formControl as any).nativeElement.classList.add('redBorder');
+        (formControl as any).nativeElement.classList.remove('greenBorder');
+    }
+
+    private removeBorderTo(target:string):void{
+        let formControl:FormControl = this.contactForm.get(target) as FormControl;
+        (formControl as any).nativeElement.classList.remove('redBorder');
+        (formControl as any).nativeElement.classList.remove('greenBorder');
     }
   
-    private resultSaveMessage(res:ArrayBuffer){
-        console.log(res);
+    private sendMessageHandler(res:Response){
+        //console.log(res);
+        this._displayReturn.nativeElement.classList.remove('errorContact');
+        this._displayReturn.nativeElement.classList.add('succesContact');
+        this._displayReturn.nativeElement.innerHTML = '<span>Votre message a bien été envoyé</span>';
     }
   
-    private resultSaveMessageError(err:HttpErrorResponse){
-        console.log(err);
+    private sendMessageErrorHandler(err:HttpErrorResponse){
+        //console.log(err);
+        this._displayReturn.nativeElement.classList.remove('succesContact');
+        this._displayReturn.nativeElement.classList.add('errorContact');
+        this._displayReturn.nativeElement.innerHTML = '<span>Une erreure est survenue, veuillez recommencer ultérieurement</span>';
     }
 
 }

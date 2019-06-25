@@ -57,6 +57,14 @@ div[root]{
                             float: right;
                             resize: none;
                         }
+                        > textarea.greenBorder{
+                            border-left-color: $text_good_color;
+                            border-left-width: 2px;
+                        }
+                        > textarea.redBorder{
+                            border-left-color: $text_error_color;
+                            border-left-width: 2px;
+                        }
                     }
                 }
 
@@ -72,11 +80,17 @@ div[root]{
                     }
                 }
             }
-            > div#errorContact{
+            > div.errorContact{
                 display: block;
                 width: 100%;
                 font-size: 14px;
                 color: $text_error_color;
+            }
+            > div.succesContact{
+                display: block;
+                width: 100%;
+                font-size: 14px;
+                color: $text_good_color;
             }
         }
     }

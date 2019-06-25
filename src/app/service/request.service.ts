@@ -43,4 +43,9 @@ export class RequestService{
         return this._httpClient.post(route, params);
     }
 
+    public sendMail(pParams:any):Observable<Object>{
+        let route:string = '/api/sendMail';
+        return this._httpClient.post(route, pParams);
+    }
+
 }
