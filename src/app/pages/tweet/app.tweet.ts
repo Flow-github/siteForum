@@ -116,7 +116,7 @@ export class TweetComponent extends AbstractPage{
         this._messageButton.nativeElement.addEventListener('mouseout', this._callOutAddMessage);
 
         this.messageForm = this._formBuilder.group({
-            message: ['', Validators.required]
+            message: ['', Validators.required, Validators.maxLength(250)]
         });
     }
 
