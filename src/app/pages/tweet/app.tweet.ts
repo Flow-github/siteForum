@@ -165,8 +165,6 @@ export class TweetComponent extends AbstractPage{
     }
 
     private loadTweetErrorHandler(err:HttpErrorResponse):void{
-        console.log('loadTweetErrorHandler');
-        console.log(err);
         this.targetHtml.style.visibility = 'hidden';
         this._subLoadTweet.unsubscribe();
     }
@@ -183,8 +181,6 @@ export class TweetComponent extends AbstractPage{
     }
 
     private loadMessagesErrorHandler(err:HttpErrorResponse):void{
-        console.log('loadMessagesErrorHandler');
-        console.log(err);
         this.targetHtml.style.visibility = 'hidden';
         this._subLoadMessages.unsubscribe();
     }
@@ -219,22 +215,19 @@ export class TweetComponent extends AbstractPage{
     }
 
     private postMessageHandler(res:Response):void{
-        console.log('postMessageHandler');
-        console.log(res);
-
         this._subLoadMessages = this._requestService.getMessagesFromTweet(environment.idTweetSelected).subscribe((res:Response) => {this.loadMessagesHandler(res)}, (err:HttpErrorResponse) => {this.loadMessagesErrorHandler(err)});
         this._subSendMessage.unsubscribe();
     }
 
     private postMessageErrorHandler(err:HttpErrorResponse):void{
-        console.log('postMessageErrorHandler');
-        console.log(err);
-
         this._subSendMessage.unsubscribe();
     }
 
     private formIsInvalid():void{
         //console.log('formIsInvalid');
+        if(this.messageForm.get('message').errors.maxlength){
+
+        }
     }
 
     private formIsValid():void{
