@@ -24,6 +24,7 @@ export class TweetComponent extends AbstractPage{
     @ViewChild('spanTag') _spanTag:ElementRef;
     @ViewChild('messageButton') _messageButton:ElementRef;
     @ViewChild('formMessage') _formMessageElement:ElementRef;
+    @ViewChild('displayError') _displayError:ElementRef;
 
     public messageForm:FormGroup;
 
@@ -116,7 +117,7 @@ export class TweetComponent extends AbstractPage{
         this._messageButton.nativeElement.addEventListener('mouseout', this._callOutAddMessage);
 
         this.messageForm = this._formBuilder.group({
-            message: ['', Validators.required, Validators.maxLength(250)]
+            message: ['', [Validators.required, Validators.maxLength(250)]]
         });
     }
 
@@ -149,6 +150,7 @@ export class TweetComponent extends AbstractPage{
     }
 
     public onSubmitForm(){
+        this._displayError.nativeElement.innerHTML = '<span></span>';
         if(this.messageForm.status == 'INVALID'){
             this.formIsInvalid();
         }else if(this.messageForm.status == 'VALID'){
@@ -224,9 +226,8 @@ export class TweetComponent extends AbstractPage{
     }
 
     private formIsInvalid():void{
-        //console.log('formIsInvalid');
         if(this.messageForm.get('message').errors.maxlength){
-
+            this._displayError.nativeElement.innerHTML = '<span>Vous ne pouvez pas mettre plus de 250 caractères par message</span>';
         }
     }
 
