@@ -10,6 +10,11 @@ export class RequestService{
 
     }
 
+    public getUserTwitterProfil(idUser:string):Observable<Object>{
+        let route:string = '/api/profile/' + idUser;
+        return this._httpClient.get(route);
+    }
+
     public getTwittes(idTwitte:string = ''):Observable<Object>{
         let route:string = '/api/twittes/' + idTwitte;
         return this._httpClient.get(route);

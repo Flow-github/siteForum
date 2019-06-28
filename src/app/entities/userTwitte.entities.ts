@@ -8,12 +8,15 @@ export class UserTwitteEntities{
     private _friendsCount:number;
     private _screenName:string;
     private _statusesCount:number;
-    private _profileBackgroundColor:string;
-    private _profileBackgroundImageUrl:string;
-    private _profileBackgroundImageUrlHtpps:string;
+    //private _profileBackgroundColor:string;
+    //private _profileBackgroundImageUrl:string;
+    //private _profileBackgroundImageUrlHtpps:string;
     private _profileImageUrl:string;
     private _profileImageUrlHttps:string;
-    private _profileTextColor:string;
+    private _profileBannerUrl:string;
+    private _createdAt:string;
+    private _profileUrl:string;
+    //private _profileTextColor:string;
 
     constructor(userTwitteParams:any){
         this._id = userTwitteParams.id_str;
@@ -24,12 +27,16 @@ export class UserTwitteEntities{
         this._friendsCount = userTwitteParams.friends_count;
         this._screenName = userTwitteParams.screen_name;
         this._statusesCount = userTwitteParams.statuses_count;
-        this._profileBackgroundColor = userTwitteParams.profile_background_color;
-        this._profileBackgroundImageUrl = userTwitteParams.profile_background_image_url;
-        this._profileBackgroundImageUrlHtpps = userTwitteParams.profile_background_image_url_https;
-        this._profileImageUrl = userTwitteParams.profile_image_url;
+        //this._profileBackgroundColor = userTwitteParams.profile_background_color;
+        //this._profileBackgroundImageUrl = userTwitteParams.profile_background_image_url;
+        //this._profileBackgroundImageUrlHtpps = userTwitteParams.profile_background_image_url_https;
+        //this._profileImageUrl = userTwitteParams.profile_image_url;
+        this._profileImageUrl = userTwitteParams.profile_image_url_https;
         this._profileImageUrlHttps = userTwitteParams.profile_image_url_https;
-        this._profileTextColor = userTwitteParams.profile_text_color;
+        this._profileBannerUrl = userTwitteParams.profile_banner_url;
+        this._createdAt = userTwitteParams.created_at;
+        this._profileUrl = userTwitteParams.url;
+        //this._profileTextColor = userTwitteParams.profile_text_color;
     }
 
     public get id():string{
@@ -64,17 +71,17 @@ export class UserTwitteEntities{
         return this._statusesCount;
     }
 
-    public get profileBackgroundColor():string{
+    /*public get profileBackgroundColor():string{
         return this._profileBackgroundColor;
-    }
+    }*/
 
-    public get profileBackgroundImageUrl():string{
+    /*public get profileBackgroundImageUrl():string{
         return this._profileBackgroundImageUrl;
-    }
+    }*/
 
-    public get profileBackgroundImageUrlHtpps():string{
+    /*public get profileBackgroundImageUrlHtpps():string{
         return this._profileBackgroundImageUrlHtpps;
-    }
+    }*/
 
     public get profileImageUrl():string{
         return this._profileImageUrl;
@@ -84,8 +91,20 @@ export class UserTwitteEntities{
         return this._profileImageUrlHttps;
     }
 
-    public get profileTextColor():string{
-        return this._profileTextColor;
+    public get profileBannerUrl():string{
+        return this._profileBannerUrl;
     }
+
+    public get createdAt():string{
+        return this._createdAt;
+    }
+
+    public get profileUrl():string{
+        return this._profileUrl;
+    }
+
+    /*public get profileTextColor():string{
+        return this._profileTextColor;
+    }*/
 
 }

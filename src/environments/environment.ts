@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   firstPageView: true,
+  idUserProfile: '404965606',
   idTweetSelected: '',
   listTwittesLoaded: null,
   isBackOnSite: false,
