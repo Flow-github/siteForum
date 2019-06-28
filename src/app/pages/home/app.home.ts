@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { RequestService } from 'src/app/service/request.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { UserTwitteEntities } from 'src/app/entities/userTwitte.entities';
 
 @Component({
     selector: '',
@@ -34,8 +35,9 @@ export class HomeComponent extends AbstractPage {
     }
 
     private loadProfileHandler(res:Response):void{
+        let userProfil:UserTwitteEntities = new UserTwitteEntities(res);
         console.log('loadProfileHandler');
-        console.log(res);
+        console.log(userProfil);
     }
 
     private loadProfileErrorHandler(err:HttpErrorResponse):void{
