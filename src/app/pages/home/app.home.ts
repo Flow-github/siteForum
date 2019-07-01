@@ -14,6 +14,16 @@ import { UserTwitteEntities } from 'src/app/entities/userTwitte.entities';
 })
 export class HomeComponent extends AbstractPage {
 
+    public urlImgBanner:string;
+    public urlImgProfile:string;
+    public screenName:string;
+    public numTweets:string;
+    public numAbonnements:string;
+    public numAbonnes:string;
+    public numLikes:string;
+    public name:string;
+    public description:string;
+
     private _subLoadProfile:Subscription;
   
     constructor(routeService:RouteService, elRef:ElementRef, private _requestService:RequestService){
@@ -35,14 +45,22 @@ export class HomeComponent extends AbstractPage {
     }
 
     private loadProfileHandler(res:Response):void{
+        this._subLoadProfile.unsubscribe();
         let userProfil:UserTwitteEntities = new UserTwitteEntities(res);
-        console.log('loadProfileHandler');
-        console.log(userProfil);
+
+        this.urlImgBanner = userProfil.profileBannerUrl;
+        this.urlImgProfile = userProfil.profileImageUrl;
+        this.screenName = userProfil.screenName;
+        this.numTweets = userProfil.statusesCount.toString();
+        this.numAbonnements = userProfil.friendsCount.toString();
+        this.numAbonnes = userProfil.fallowersCount.toString();
+        this.numLikes = userProfil.favouritesCount.toString();
+        this.name = userProfil.name;
+        this.description = userProfil.description;
     }
 
     private loadProfileErrorHandler(err:HttpErrorResponse):void{
-        console.log('loadProfileErrorHandler');
-        console.log(err);
+        this._subLoadProfile.unsubscribe();
     }
 
 }
