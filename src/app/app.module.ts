@@ -22,10 +22,12 @@ import { LoginComponent } from './pages/login/app.login';
 import { AccountComponent } from './pages/account/app.account';
 import { ContactComponent } from './pages/contact/app.contact';
 import { NativeElementInjectorDirective } from './utils/nativeElement.injector.directive';
+import { HeaderComponent } from './header/app.header';
 
 @NgModule({
   declarations: [
     StructureComponent,
+    HeaderComponent,
     NavComponent,
     NavButtonComponent,
     HomeComponent,
