@@ -13,5 +13,9 @@ $height_footer:65px;
 $margin_content:20px;
 $height_content: calc(100% - #{$height_header} - #{$height_footer} - calc(#{$margin_content} * 2));
 
+//header.component
+$widthLogoTwitter:40px;
+$heightLogotwitter:$widthLogoTwitter;
+
 //twitte.component
 $grey_text_color:#A1A1A1;
