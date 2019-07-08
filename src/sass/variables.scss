@@ -8,7 +8,7 @@ $text_error_color: rgb(136, 12, 12);
 //structure.component
 $min_width_body:800px;
 $max_width_body:1200px;
-$height_header:350px;
+$height_header:200px;
 $height_footer:65px;
 $margin_content:20px;
 $height_content: calc(100% - #{$height_header} - #{$height_footer} - calc(#{$margin_content} * 2));

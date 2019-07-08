@@ -4,10 +4,11 @@ import { RouteService } from 'src/app/service/route.service';
 import { RequestService } from 'src/app/service/request.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SessionEntities } from 'src/app/entities/session.entities';
+//import { SessionEntities } from 'src/app/entities/session.entities';
 import { environment } from 'src/environments/environment';
 import { NavService } from 'src/app/service/nav.service';
 import { Subscription } from 'rxjs';
+import { ConnectService } from 'src/app/service/connect.service';
 
 @Component({
     selector: '',
@@ -22,7 +23,11 @@ export class LoginComponent extends AbstractPage{
 
     private _subLogTo:Subscription;
 
-    constructor(private _routeService:RouteService, _elRef:ElementRef, private _requestService:RequestService, private _formBuilder: FormBuilder){
+    constructor(private _routeService:RouteService,
+                        _elRef:ElementRef,
+                        private _requestService:RequestService,
+                        private _formBuilder: FormBuilder,
+                        private _connectService:ConnectService){
         super(_routeService, _elRef);
     }
 
@@ -84,9 +89,10 @@ export class LoginComponent extends AbstractPage{
         this._subLogTo.unsubscribe();
 
         let userObject:any = res;
-        sessionStorage.setItem(SessionEntities.KEY_IS_CONNECTED, '1');
+        /*sessionStorage.setItem(SessionEntities.KEY_IS_CONNECTED, '1');
         sessionStorage.setItem(SessionEntities.KEY_ID_USER, userObject.id.toString());
-        sessionStorage.setItem(SessionEntities.KEY_PSEUDO_USER, userObject.pseudo);
+        sessionStorage.setItem(SessionEntities.KEY_PSEUDO_USER, userObject.pseudo);*/
+        this._connectService.stateConnect(userObject.id.toString(), userObject.pseudo);
 
         if(environment.isBackOnSite){
             window.history.back();
@@ -96,7 +102,7 @@ export class LoginComponent extends AbstractPage{
     }
 
     private logToErrorHandler(err:HttpErrorResponse):void{
-        console.log(err);
+        //console.log(err);
         if(err.status == 404){
             this._displayError.nativeElement.innerHTML = '<span>Votre login ou vatre password sont incorrecte</span>';
         }else{

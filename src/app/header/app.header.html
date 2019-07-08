@@ -1,13 +1,15 @@
 <div root>
     <div>
-        <div id="imgHeader">
+        <div #bgHeader id="imgHeader">
             <img src="assets/img/terrain.jpg" />
         </div>
         <div id="contentHeader">
             <div>
-                <img src="assets/img/Twitter_Logo_WhiteOnImage.png" />
+                <a href="https://twitter.com/{{ screenName }}" target="_blank">
+                    <img src="assets/img/Twitter_Logo_WhiteOnImage.png" />
+                </a>
             </div>
-            <div>
+            <div #buttonLog>
                 <span>{{ textLog }}</span>
             </div>
         </div>

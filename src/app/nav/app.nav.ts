@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavService } from '../service/nav.service';
 import { NavEntities } from '../entities/nav.entities';
-import { NavButtonComponent } from './navElement/navButton.component';
 
 @Component({
     selector: 'nav-root',
@@ -21,6 +20,11 @@ export class NavComponent{
     }
 
     public ngOnInit():void{
+        this._navService.navChanged.subscribe(() => {this.navChangeHandler()});
+        this.navChangeHandler();
+    }
+
+    private navChangeHandler():void{
         this._listNavElements = this._navService.getNavList();
     }
 

@@ -23,6 +23,7 @@ import { AccountComponent } from './pages/account/app.account';
 import { ContactComponent } from './pages/contact/app.contact';
 import { NativeElementInjectorDirective } from './utils/nativeElement.injector.directive';
 import { HeaderComponent } from './header/app.header';
+import { ConnectService } from './service/connect.service';
 
 @NgModule({
   declarations: [
@@ -48,9 +49,10 @@ import { HeaderComponent } from './header/app.header';
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'fr' },
+    ConnectService,
     NavService,
     RouteService,
-    RequestService
+    RequestService,
   ],
   bootstrap: [
     StructureComponent

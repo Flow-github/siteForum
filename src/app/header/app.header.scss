@@ -26,10 +26,12 @@ div[root]{
             padding: 0px 0px 0px 0px;
             z-index: 2;
             background-color: rgba($header_blue_color, 0.8);
+            pointer-events: none;
             > div{
                 margin: 10px 20px 0px 20px;
                 display: inline-block;
-                > img{
+                pointer-events: initial;
+                > a > img{
                     width: $widthLogoTwitter;
                 }
                 > span{
