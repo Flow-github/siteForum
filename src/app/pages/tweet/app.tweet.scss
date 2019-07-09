@@ -18,7 +18,7 @@ div[root]{
             letter-spacing: -0.5px;
         }
         > div#tweet{
-            padding: 0px 2px 0px 2px;
+            padding: 0px 8px 0px 2px;
             cursor: pointer;
             > span.title{
                 font-size: 34px;
@@ -65,7 +65,8 @@ div[root]{
                 border: 1px solid $footer_blue_color;
                 border-radius: 16px;
                 color: #FFFFFF;
-                padding: 4px;
+                padding: 8px 12px 8px 12px;
+                margin: -6px 8px 0px 0px;
                 float: right;
                 letter-spacing: -0.5px;
             }
