@@ -4,7 +4,6 @@ import { RouteService } from 'src/app/service/route.service';
 import { RequestService } from 'src/app/service/request.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-//import { SessionEntities } from 'src/app/entities/session.entities';
 import { environment } from 'src/environments/environment';
 import { NavService } from 'src/app/service/nav.service';
 import { Subscription } from 'rxjs';
@@ -89,9 +88,6 @@ export class LoginComponent extends AbstractPage{
         this._subLogTo.unsubscribe();
 
         let userObject:any = res;
-        /*sessionStorage.setItem(SessionEntities.KEY_IS_CONNECTED, '1');
-        sessionStorage.setItem(SessionEntities.KEY_ID_USER, userObject.id.toString());
-        sessionStorage.setItem(SessionEntities.KEY_PSEUDO_USER, userObject.pseudo);*/
         this._connectService.stateConnect(userObject.id.toString(), userObject.pseudo);
 
         if(environment.isBackOnSite){
@@ -102,7 +98,6 @@ export class LoginComponent extends AbstractPage{
     }
 
     private logToErrorHandler(err:HttpErrorResponse):void{
-        //console.log(err);
         if(err.status == 404){
             this._displayError.nativeElement.innerHTML = '<span>Votre login ou vatre password sont incorrecte</span>';
         }else{

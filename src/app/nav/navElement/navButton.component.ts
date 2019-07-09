@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 import { NavEntities } from 'src/app/entities/nav.entities';
 import { RouteService } from 'src/app/service/route.service';
+import { NavService } from 'src/app/service/nav.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'navButton-root',
@@ -23,7 +25,7 @@ export class NavButtonComponent implements OnInit, OnDestroy{
         return this._url;
     }
 
-    constructor(private _routeService:RouteService){
+    constructor(private _routeService:RouteService, private _route:Router){
         
     }
 
@@ -40,7 +42,11 @@ export class NavButtonComponent implements OnInit, OnDestroy{
     }
 
     private onClickNavButton(e:MouseEvent):void{
-        this._routeService.routeStartChange.emit(this._url);
+        if(this._url == NavService.LOG_OUT){
+            this._route.navigateByUrl(this._url);
+        }else{
+            this._routeService.routeStartChange.emit(this._url);
+        }
     }
 
 }

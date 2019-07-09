@@ -1,6 +1,7 @@
 import { NavEntities } from '../entities/nav.entities'
 import { ConnectService } from './connect.service';
 import { EventEmitter, Injectable } from '@angular/core';
+import { SessionEntities } from '../entities/session.entities';
 
 @Injectable()
 export class NavService{
@@ -20,8 +21,8 @@ export class NavService{
     constructor(private _connectService:ConnectService){
         this.navChanged = new EventEmitter<any>();
         this._connectService.stateConnectChange.subscribe((state:boolean) => {this.stateConnectHandler(state)});
-
-        this.stateConnectHandler(false);
+        
+        this.stateConnectHandler(sessionStorage.getItem(SessionEntities.KEY_IS_CONNECTED) == '1');
     }
 
     private navNotConnected():void{

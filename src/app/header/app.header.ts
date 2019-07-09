@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
     public ngOnInit():void{
         this._subLoadProfile = this._requestService.getUserTwitterProfil(environment.idUserProfile).subscribe((res:Response) => {this.loadProfileHandler(res)}, (err:HttpErrorResponse) => {this.loadProfileErrorHandler(err)});
 
-        this.textLog = HeaderComponent.LOGIN;
+        this.stateConnectHandler(sessionStorage.getItem(SessionEntities.KEY_IS_CONNECTED) == '1');
 
         this._callClickBgHeader = (e:MouseEvent) => {this.onClickBgHandler(e)};
         this._callClickBtLog = (e:MouseEvent) => {this.onClickLogHandler(e)};

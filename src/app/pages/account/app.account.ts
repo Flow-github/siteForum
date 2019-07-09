@@ -5,9 +5,9 @@ import { RequestService } from 'src/app/service/request.service';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SessionEntities } from 'src/app/entities/session.entities';
 import { environment } from 'src/environments/environment';
 import { NavService } from 'src/app/service/nav.service';
+import { ConnectService } from 'src/app/service/connect.service';
 
 @Component({
     selector: '',
@@ -35,7 +35,11 @@ export class AccountComponent extends AbstractPage{
     private _errorsMessage:string;
     private _subCreate:Subscription;
 
-    constructor(private _routeService:RouteService, _elRef:ElementRef, private _requestService:RequestService, private _formBuilder: FormBuilder){
+    constructor(private _routeService:RouteService,
+                        _elRef:ElementRef,
+                private _requestService:RequestService,
+                private _formBuilder: FormBuilder,
+                private _connectService:ConnectService){
         super(_routeService, _elRef);
     }
 
@@ -162,9 +166,7 @@ export class AccountComponent extends AbstractPage{
         this._subCreate.unsubscribe();
 
         let returnObject:any = res;
-        sessionStorage.setItem(SessionEntities.KEY_IS_CONNECTED, '1');
-        sessionStorage.setItem(SessionEntities.KEY_ID_USER, returnObject.insertId);
-        sessionStorage.setItem(SessionEntities.KEY_PSEUDO_USER, this.createAccountForm.value.pseudo);
+        this._connectService.stateConnect(returnObject.insertId, this.createAccountForm.value.pseudo);
 
         if(environment.isBackOnSite){
             window.history.back();
