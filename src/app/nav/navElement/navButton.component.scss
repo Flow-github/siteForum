@@ -11,5 +11,9 @@ div[root]{
             color: $footer_blue_color;
             cursor: pointer;
         }
+        > span.selected{
+            font-weight: bold;
+            color: $footer_blue_color;
+        }
     }
 }
