@@ -32,7 +32,7 @@ export class StructureComponent implements OnInit, AfterViewChecked {
 
   public ngAfterViewChecked():void{
     let stylesGlobalContent:CSSStyleDeclaration =  window.getComputedStyle(document.children[0]);
-    let heightContentScreen:number = parseInt(stylesGlobalContent.height, 10) - 200 - 65 - 40;
+    let heightContentScreen:number = parseInt(stylesGlobalContent.height, 10) - 200 - 30 - 40;
     let contentHeight:number = this._contentElement.clientHeight;
     let targetHeight:number = 0;
     if(heightContentScreen > contentHeight){

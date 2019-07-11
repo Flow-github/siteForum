@@ -1,0 +1,24 @@
+@import 'src/sass/variables.scss';
+
+div[root]{
+    > div{
+        width: 80%;
+        height: $height_footer;
+        min-width: $min_width_body;
+        max-width: $max_width_body;
+        line-height: $height_footer;
+        text-align: center;
+        color:#FFFFFF;
+        font-size: 12px;
+        margin: 0px auto 0px auto;
+        padding: 0px;
+        
+        > a{
+            text-decoration: none;
+        }
+
+        > a:visited{
+            color:#FFFFFF;
+        }
+    }
+}

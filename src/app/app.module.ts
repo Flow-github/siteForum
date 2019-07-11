@@ -24,6 +24,7 @@ import { ContactComponent } from './pages/contact/app.contact';
 import { NativeElementInjectorDirective } from './utils/nativeElement.injector.directive';
 import { HeaderComponent } from './header/app.header';
 import { ConnectService } from './service/connect.service';
+import { FooterComponent } from './footer/app.footer';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ConnectService } from './service/connect.service';
     HeaderComponent,
     NavComponent,
     NavButtonComponent,
+    FooterComponent,
     HomeComponent,
     TwittesListComponent,
     TwitteComponent,
