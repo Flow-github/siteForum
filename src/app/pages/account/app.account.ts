@@ -28,12 +28,14 @@ export class AccountComponent extends AbstractPage{
     private static readonly ERROR_MESSAGE_INCONNU:string = 'Un problème inconnu est survenu veuillez réessayer plus tard';
 
     @ViewChild('displayError') _displayError:ElementRef;
+    @ViewChild('buttonCGU') _buttonCGU:ElementRef;
 
     public createAccountForm:FormGroup;
 
     private _cguAccepted:boolean;
     private _errorsMessage:string;
     private _subCreate:Subscription;
+    private _callClickCGU:Function;
 
     constructor(private _routeService:RouteService,
                         _elRef:ElementRef,
@@ -55,6 +57,9 @@ export class AccountComponent extends AbstractPage{
         },
         {validator: (formTarget:AbstractControl) => {this.checkCheckbox(formTarget)}}
         );
+
+        this._callClickCGU = (e:MouseEvent) => { this.onClickCGUHandler(e)};
+        this._buttonCGU.nativeElement.addEventListener('click', this._callClickCGU);
     }
 
     public ngOnDestroy():void{
@@ -63,6 +68,8 @@ export class AccountComponent extends AbstractPage{
         if(this._subCreate){
             this._subCreate.unsubscribe();
         }
+
+        this._buttonCGU.nativeElement.removeEventListener('click', this._callClickCGU);
     }
 
     public onSubmitForm():void{
@@ -215,6 +222,10 @@ export class AccountComponent extends AbstractPage{
         }
 
         this.displayErrorMessage();
+    }
+
+    private onClickCGUHandler(e:MouseEvent):void{
+        this._routeService.routeStartChange.emit(NavService.CGU_ROUTE);
     }
 
 }

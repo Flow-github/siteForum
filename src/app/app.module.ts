@@ -25,6 +25,7 @@ import { NativeElementInjectorDirective } from './utils/nativeElement.injector.d
 import { HeaderComponent } from './header/app.header';
 import { ConnectService } from './service/connect.service';
 import { FooterComponent } from './footer/app.footer';
+import { CGUComponent } from './pages/cgu/app.cgu';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { FooterComponent } from './footer/app.footer';
     LoginComponent,
     AccountComponent,
     ContactComponent,
+    CGUComponent,
     NativeElementInjectorDirective,
   ],
   imports: [

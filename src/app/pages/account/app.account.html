@@ -3,7 +3,7 @@
         <div>
             <form [formGroup]="createAccountForm" (ngSubmit)="onSubmitForm()">
                 <div id='titleAccount'>
-                    Créer un compte :
+                    Pour pouvoir laisser un message sur le site, créer un profil :
                 </div>
                 <div id='formAccount'>
                     <div>
@@ -12,18 +12,18 @@
                     </div>
                     <div>
                         <span>mot de passe : </span>
-                        <input my-formControl type='text' value='' name='textPassword' formControlName="password" />
+                        <input my-formControl type='password' value='' name='textPassword' formControlName="password" />
                     </div>
                     <div>
                         <span>confirmation mot de passe : </span>
-                        <input my-formControl type='text' value='' name='textConfirmPassword' formControlName="passwordConfirm" />
+                        <input my-formControl type='password' value='' name='textConfirmPassword' formControlName="passwordConfirm" />
                     </div>
                     <div>
                         <span>pseudo : </span>
                         <input my-formControl type='text' value='' name='textPseudo' formControlName="pseudo" />
                     </div>
                     <div>
-                        <span>j'accepte les conditions d'utilisations : </span>
+                        <span #buttonCGU>j'accepte les cgu : </span>
                         <input my-formControl type='checkbox' name='caseCGU' formControlName="cgu" />
                     </div>
                 </div>

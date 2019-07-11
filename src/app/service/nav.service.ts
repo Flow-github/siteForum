@@ -13,6 +13,7 @@ export class NavService{
     public static readonly LOG_OUT:string = 'log-out';
     public static readonly CREATE_ACCOUNT:string = 'create-account';
     public static readonly CONTACT_ROUTE:string = 'contact';
+    public static readonly CGU_ROUTE:string = 'cgu';
 
     public navChanged:EventEmitter<any>;
 

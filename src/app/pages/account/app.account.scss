@@ -51,10 +51,14 @@ div[root]{
                     }
 
                     > div:last-child{
+                        > span{
+                            cursor: pointer;
+                        }
                         > input{
                             width: auto;
                             border-style:solid;
                             float: none;
+                            margin: 0px 0px 0px 12px;
                         }
                     }
                 }
